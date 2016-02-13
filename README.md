@@ -1,0 +1,2 @@
+# Smart-Test-Utility
+As all good force.com developers know, you should not rely on existing system data for your tests to work with, but inserting records into a foreign org which could have any number of unexpected validation rules and required fields makes for a lot of extra code, or a high risk of test failure. There are many ways to include data for tests, including through static resources, but every method has its own peculiarities.
