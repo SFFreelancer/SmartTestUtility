@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Smart Test Utility by SalesforceStuff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Smart Test Utility</h1>
+      <h2 class="project-tagline">As all good force.com developers know, you should not rely on existing system data for your tests to work with, but inserting records into a foreign org which could have any number of unexpected validation rules and required fields makes for a lot of extra code, or a high risk of test failure. There are many ways to include data for tests, including through static resources, but every method has its own peculiarities.</h2>
+      <a href="https://github.com/SalesforceStuff/SmartTestUtility" class="btn">View on GitHub</a>
+      <a href="https://github.com/SalesforceStuff/SmartTestUtility/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/SalesforceStuff/SmartTestUtility/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="welcome-to-salesforce-smart-test-utility" class="anchor" href="#welcome-to-salesforce-smart-test-utility" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Salesforce Smart Test Utility.</h3>
+
+<blockquote>
+<p>The Purpose of this repository will be to huge time saver for you and allowed you to replace tens of lines of object creation with &gt;a mere handful through Salesforce test data generator fills lookups, master-detail relationships, and required fields.</p>
+</blockquote>
+
+<h3>
+<a id="why-to-write-a-smart-test-methods" class="anchor" href="#why-to-write-a-smart-test-methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why to write a smart test methods</h3>
+
+<blockquote>
+<p>How often have you wasted hours reverse-engineering a new schema just to create data for a unit test?
+And as all good force.com developers know, you should not rely on existing system data for your tests to work with, but inserting &gt;records into a foreign org which could have any number of unexpected validation rules and required fields makes for a lot of extra &gt;code, or a high risk of test failure. There are many ways to include data for tests, including through static resources, but every method has its own peculiarities. </p>
+</blockquote>
+
+<h3>
+<a id="how-the-smarttestutility-class-will-be-helpful" class="anchor" href="#how-the-smarttestutility-class-will-be-helpful" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How the SmartTestUtility Class will be helpful:</h3>
+
+<blockquote>
+<p>SmartTestUtility dynamically use the Describe metadata to populate all required fields with valid data and create any related &gt;objects and provide a recursion limit for lookups to the same object type upto 5 level:</p>
+</blockquote>
+
+<h5>
+<a id="multiple-method-overloading-to-provide-multiple-option-to-access-the-smarttestutility-class-methods" class="anchor" href="#multiple-method-overloading-to-provide-multiple-option-to-access-the-smarttestutility-class-methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Method Overloading to provide multiple option to access the SmartTestUtility Class methods</h5>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-c1">String</span> sObjectType)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecord</span>(sObjectType, <span class="pl-c1">true</span>);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecord</span>(sObjectType, <span class="pl-c1">true</span>);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-c1">String</span> sObjectType, <span class="pl-c1">Boolean</span> doInsert)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecord</span>(sObjectType, doInsert, <span class="pl-c1">null</span>);    
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType, <span class="pl-c1">Boolean</span> doInsert)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecord</span>(sObjectType, doInsert, <span class="pl-c1">null</span>);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-c1">String</span> sObjectType, <span class="pl-c1">Boolean</span> doInsert, <span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;</span> recordDefaultValueMap)
+    {
+        List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> testRecordList <span class="pl-k">=</span> <span class="pl-en">createTestRecordList</span>(sObjectType, <span class="pl-c1">1</span>, doInsert, <span class="pl-k">new</span> <span class="pl-en">List</span><span class="pl-k">&lt;</span><span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;&gt;</span>{ recordDefaultValueMap });
+        <span class="pl-k">return</span> testRecordList[<span class="pl-c1">0</span>];    
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> sObject <span class="pl-en">createTestRecord</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType, <span class="pl-c1">Boolean</span> doInsert, <span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;</span> recordDefaultValueMap)
+    {
+        List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> testRecordList <span class="pl-k">=</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span>.<span class="pl-c1">valueOf</span>(sObjectType), <span class="pl-c1">1</span>, doInsert, <span class="pl-k">new</span> <span class="pl-en">List</span><span class="pl-k">&lt;</span><span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;&gt;</span>{ recordDefaultValueMap });
+        <span class="pl-k">return</span> testRecordList[<span class="pl-c1">0</span>];
+    }    
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span> sObjectType, Integer numberOfRecords)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(sObjectType, numberOfRecords, <span class="pl-c1">true</span>);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType, Integer numberOfRecords)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span>.<span class="pl-c1">valueOf</span>(sObjectType), numberOfRecords);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span> sObjectType, Integer numberOfRecords, <span class="pl-c1">Boolean</span> doInsert)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(sObjectType, numberOfRecords, doInsert, <span class="pl-c1">null</span>);    
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType, Integer numberOfRecords, <span class="pl-c1">Boolean</span> doInsert)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span>.<span class="pl-c1">valueOf</span>(sObjectType), numberOfRecords, doInsert);
+    }
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span> sObjectType, Integer numberOfRecords, <span class="pl-c1">Boolean</span> doInsert, List<span class="pl-k">&lt;</span><span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;&gt;</span> recordDefaultValueMap)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(sObjectType, numberOfRecords, doInsert, recordDefaultValueMap, <span class="pl-c1">0</span>);
+    }    
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> List<span class="pl-k">&lt;</span>sObject<span class="pl-k">&gt;</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType, Integer numberOfRecords, <span class="pl-c1">Boolean</span> doInsert, List<span class="pl-k">&lt;</span><span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>,<span class="pl-c1">Object</span><span class="pl-k">&gt;&gt;</span> recordDefaultValueMap)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">createTestRecordList</span>(<span class="pl-c1">String</span>.<span class="pl-c1">valueOf</span>(sObjectType), numberOfRecords, doInsert, recordDefaultValueMap, <span class="pl-c1">0</span>);
+    }    
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>, <span class="pl-smi">Schema</span>.<span class="pl-smi">SObjectField</span><span class="pl-k">&gt;</span> <span class="pl-en">getFieldMapFor</span>(<span class="pl-c1">String</span> sObjectType)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">fieldMapFor</span>(sObjectType);
+    }
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>, <span class="pl-smi">Schema</span>.<span class="pl-smi">SObjectField</span><span class="pl-k">&gt;</span> <span class="pl-en">getFieldMapFor</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">sObjectType</span> sObjectType)
+    {
+        <span class="pl-k">return</span> <span class="pl-en">getFieldMapFor</span>(<span class="pl-c1">String</span>.<span class="pl-c1">valueOf</span>(sObjectType));
+    }   </pre></div>
+
+<h4>
+<a id="line-usage" class="anchor" href="#line-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Line Usage</h4>
+
+<h5>
+<a id="simple-line-to-create-objects" class="anchor" href="#simple-line-to-create-objects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple line to create objects:</h5>
+
+<div class="highlight highlight-source-js"><pre>Account account <span class="pl-k">=</span> (Account)<span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">createTestRecord</span>(<span class="pl-s"><span class="pl-pds">'</span>Account<span class="pl-pds">'</span></span>);
+                              <span class="pl-c1">OR</span>
+Account account <span class="pl-k">=</span> (Account)<span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">createTestRecord</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">Account</span>.<span class="pl-smi">sObjectType</span>);</pre></div>
+
+<h5>
+<a id="simple-line-to-create-multiple-object-records-it-will-help-you-while-bulk-testing" class="anchor" href="#simple-line-to-create-multiple-object-records-it-will-help-you-while-bulk-testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple line to create multiple object records (it will help you while bulk testing):</h5>
+
+<div class="highlight highlight-source-js"><pre>List<span class="pl-k">&lt;</span>Account<span class="pl-k">&gt;</span> accountList <span class="pl-k">=</span> (List<span class="pl-k">&lt;</span>Account<span class="pl-k">&gt;</span>)<span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">createTestRecordList</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">Account</span>.<span class="pl-smi">sObjectType</span>,Integer numberOfRecords);
+                              <span class="pl-c1">OR</span>
+List<span class="pl-k">&lt;</span>Account<span class="pl-k">&gt;</span> accountList <span class="pl-k">=</span> (List<span class="pl-k">&lt;</span>Account<span class="pl-k">&gt;</span>)<span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">createTestRecordList</span>(<span class="pl-smi">Schema</span>.<span class="pl-smi">Account</span>.<span class="pl-smi">sObjectType</span>,Integer numberOfRecords);</pre></div>
+
+<h4>
+<a id="additional-options" class="anchor" href="#additional-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Additional Options</h4>
+
+<h5>
+<a id="to-fill-all-fields-for-test-records" class="anchor" href="#to-fill-all-fields-for-test-records" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To fill all fields for Test Records:</h5>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">SmartTestUtility</span>.<span class="pl-smi">FillAllFields</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>;</pre></div>
+
+<h5>
+<a id="to-get-system-administrator-profile" class="anchor" href="#to-get-system-administrator-profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To get System Administrator Profile</h5>
+
+<div class="highlight highlight-source-js"><pre>Profile adminProfile <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-c1">ADMIN_PPROFILE</span>;</pre></div>
+
+<h5>
+<a id="get-current-user-record" class="anchor" href="#get-current-user-record" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Current User Record:</h5>
+
+<div class="highlight highlight-source-js"><pre>User currentUser <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-c1">CURRENT_USER</span>;</pre></div>
+
+<h5>
+<a id="get-admin-user-record" class="anchor" href="#get-admin-user-record" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Admin User Record:</h5>
+
+<div class="highlight highlight-source-js"><pre>User adminUser <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-c1">ADMIN_USER</span>;</pre></div>
+
+<h5>
+<a id="to-define-default-country-and-state--countrycode-and-statecode--countrystate-picklist-enabled-organizations" class="anchor" href="#to-define-default-country-and-state--countrycode-and-statecode--countrystate-picklist-enabled-organizations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To define default Country and State / CountryCode and StateCode ( CountryState Picklist Enabled Organizations)</h5>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">SmartTestUtility</span>.<span class="pl-smi">DefaultCountry</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>India<span class="pl-pds">'</span></span>;
+<span class="pl-smi">SmartTestUtility</span>.<span class="pl-smi">DefaultCountryCode</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>IN<span class="pl-pds">'</span></span>;
+<span class="pl-smi">SmartTestUtility</span>.<span class="pl-smi">DefaultState</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Maharashtra<span class="pl-pds">'</span></span>;
+<span class="pl-smi">SmartTestUtility</span>.<span class="pl-smi">DefaultStateCode</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MH<span class="pl-pds">'</span></span>;</pre></div>
+
+<h5>
+<a id="to-perform-database-operation-with-assert" class="anchor" href="#to-perform-database-operation-with-assert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To perform Database operation with Assert:</h5>
+
+<div class="highlight highlight-source-js"><pre>
+<span class="pl-c">// For Single Record.</span>
+<span class="pl-smi">Database</span>.<span class="pl-smi">SaveResult</span> insertSaveResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">insertWithAssert</span>(sObjectRecord); 
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">SaveResult</span> updateSaveResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">updateWithAssert</span>(sObjectRecord);
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">Upsertresult</span> upsertResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">upsertWithAssert</span>(sObjectRecord);
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">DeleteResult</span> deleteResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">deleteWithAssert</span>(sObjectRecord);
+
+<span class="pl-c">// For List of sObject</span>
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">SaveResult</span>[] insertSaveResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">insertListWithAssert</span>(sObjectRecord); 
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">SaveResult</span>[] updateSaveResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">updateListWithAssert</span>(sObjectRecord);
+
+<span class="pl-smi">Database</span>.<span class="pl-smi">DeleteResult</span>[] deleteResult <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">deleteListWithAssert</span>(sObjectRecord);</pre></div>
+
+<h5>
+<a id="to-get-the-fields-of-objects" class="anchor" href="#to-get-the-fields-of-objects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>To Get the Fields of Objects</h5>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">Map</span><span class="pl-k">&lt;</span><span class="pl-c1">String</span>, <span class="pl-smi">Schema</span>.<span class="pl-smi">SObjectField</span><span class="pl-k">&gt;</span> accountFieldMap <span class="pl-k">=</span> <span class="pl-smi">SmartTestUtility</span>.<span class="pl-en">getFieldMapFor</span>(<span class="pl-s"><span class="pl-pds">'</span>Account<span class="pl-pds">'</span></span>);</pre></div>
+
+<h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
+
+<p>Having trouble with Pages? Check out the <a href="isalesforcestuff.blogspot.com/2016/02/smart-way-to-write-test-methods.html">Blog</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/SalesforceStuff/SmartTestUtility">Smart Test Utility</a> is maintained by <a href="https://github.com/SalesforceStuff">SalesforceStuff</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-73005951-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
