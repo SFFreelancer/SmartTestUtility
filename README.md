@@ -1,14 +1,15 @@
 ### Welcome to Salesforce Smart Test Utility.
->The Purpose of this repository will be to huge time saver for you and allowed you to replace tens of lines of object creation with >a mere handful through Salesforce test data generator fills lookups, master-detail relationships, and required fields.
+>The Purpose of this repository is to save your huge time  and allow you to replace tens of lines of object creation with a mere handful ones.
+This is done through Salesforce test data generator that populates the lookup, master-detail relationships and required fields.
 
 ### Why to write a smart test methods
 >How often have you wasted hours reverse-engineering a new schema just to create data for a unit test?
->And as all good force.com developers know, you should not rely on existing system data for your tests to work with, but inserting >records into a foreign org which could have any number of unexpected validation rules and required fields makes for a lot of extra >code, or a high risk of test failure. There are many ways to include data for tests, including through static resources, but every method has its own peculiarities. 
+>And as all good force.com developers know, you should not rely on existing system data for your tests to work with, but inserting records into a foreign org which could have any number of unexpected validation rules and required fields makes for a lot of extra code, or a high risk of test failure. There are many ways to include data for tests, including through static resources, but every method has its own peculiarities. 
 
 
 ### How the SmartTestUtility Class will be helpful:
 
->SmartTestUtility dynamically use the Describe metadata to populate all required fields with valid data and create any related >objects and provide a recursion limit for lookups to the same object type upto 5 level:
+>SmartTestUtility dynamically used to describe metadata for populating all  the required fields with valid data and creating any related objects and provide a recursion limit for lookup to the same object type upto 5 levels
 
 #####Multiple Method Overloading to provide multiple option to access the SmartTestUtility Class methods
 ```javascript
