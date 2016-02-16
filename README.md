@@ -1,4 +1,4 @@
-### Welcome to Salesforce Smart Test Utility.
+### Welcome to Salesforce Smart Test Utility
 >The Purpose of this repository is to save your huge time  and allow you to replace tens of lines of object creation with a mere handful ones.
 This is done through Salesforce test data generator that populates the lookup, master-detail relationships and required fields.
 
