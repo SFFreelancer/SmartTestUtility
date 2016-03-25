@@ -4,6 +4,7 @@ Implemented On: 13-02-2016.
 Purpose: To Create a smart Test Data.
 Email:- srbagal.ceo@gmail.com
 */
+@isTest
 public with sharing class SmartTestUtility {
     
     // Private Members
